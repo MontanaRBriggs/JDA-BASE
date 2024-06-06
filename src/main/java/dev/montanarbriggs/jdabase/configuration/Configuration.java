@@ -18,34 +18,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package dev.montanarbriggs.jdabase;
+package dev.montanarbriggs.jdabase.configuration;
 
-import dev.montanarbriggs.jdabase.configuration.Configuration;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.exceptions.InvalidTokenException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
-public class Main {
-    public static void main(String[] args) {
-        try {
-            new Configuration(new File("Configuration.json"));
-        } catch (IOException configurationLoadException) {
-            // TODO: Implement Logback-Classic logging.
+public class Configuration extends JSONObject {
+    private static Configuration configurationInstance = null;
 
-            System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
-        }
+    public Configuration(File jsonConfigurationFile) throws IOException {
+        super(new String(Files.readAllBytes(jsonConfigurationFile.toPath())));
 
-        try {
-            JDA jdaObject = JDABuilder.createDefault(
-                    Configuration.getConfigurationInstance().optString("botToken")
-            ).build();
-        } catch (InvalidTokenException invalidTokenException) {
-            // TODO: Implement Logback-Classic logging.
+        configurationInstance = this;
+    }
 
-            System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
-        }
+    public static Configuration getConfigurationInstance() {
+        return configurationInstance;
     }
 }
