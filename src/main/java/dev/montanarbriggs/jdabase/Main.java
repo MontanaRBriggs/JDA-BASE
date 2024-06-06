@@ -24,16 +24,20 @@ import dev.montanarbriggs.jdabase.configuration.Configuration;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.exceptions.InvalidTokenException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Main {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         try {
             new Configuration(new File("Configuration.json"));
         } catch (IOException configurationLoadException) {
-            // TODO: Implement Logback-Classic logging.
+            LOGGER.error("IOException occurred whilst loading Configuration.json.");
 
             System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
         }
@@ -43,7 +47,7 @@ public class Main {
                     Configuration.getConfigurationInstance().optString("botToken")
             ).build();
         } catch (InvalidTokenException invalidTokenException) {
-            // TODO: Implement Logback-Classic logging.
+            LOGGER.error("InvalidTokenException occurred whilst initializing JDA, please ensure botToken is valid.");
 
             System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
         }
