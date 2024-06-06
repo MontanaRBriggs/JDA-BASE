@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Scanner;
 
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
@@ -46,10 +48,52 @@ public class Main {
             JDA jdaObject = JDABuilder.createDefault(
                     Configuration.getConfigurationInstance().optString("botToken")
             ).build();
+
+            Scanner terminalScanner = new Scanner(System.in);
+
+            while (terminalScanner.hasNextLine()) {
+                String terminalCommand = terminalScanner.nextLine();
+
+                switch (terminalCommand.toLowerCase()) {
+                    case "help": {
+                        break; // TODO: Implement terminal 'help' command.
+                    } case "shutdown": {
+                        Shutdown(jdaObject); // Function logic always calls System.exit(), no break necessary.
+                    } default: {
+                        LOGGER.error("Unknown terminal command entered, type \"help\" for a list of commands.");
+                    }
+                }
+            }
         } catch (InvalidTokenException invalidTokenException) {
             LOGGER.error("InvalidTokenException occurred whilst initializing JDA, please ensure botToken is valid.");
 
             System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
         }
+    }
+
+    private static void Shutdown(JDA jdaObject) {
+        LOGGER.info("Initializing JDA graceful shutdown.");
+
+        jdaObject.shutdown();
+
+        try {
+            if (!jdaObject.awaitShutdown(Duration.ofMinutes(5))) {
+                LOGGER.warn("JDA took more than five (5) minutes to shut down gracefully, forcing shutdown.");
+
+                jdaObject.shutdownNow();
+
+                if (jdaObject.awaitShutdown(Duration.ofMinutes(5))) {
+                    LOGGER.error("JDA took more than five (5) minutes to forcibly shut down. Terminating process.");
+
+                    System.exit(-1);
+                }
+            }
+        } catch(InterruptedException threadInterruptedException) {
+            LOGGER.error("InterruptedException thrown whilst awaiting JDA shutdown (thread interruption).");
+
+            System.exit(-1);
+        }
+
+        System.exit(0);
     }
 }
