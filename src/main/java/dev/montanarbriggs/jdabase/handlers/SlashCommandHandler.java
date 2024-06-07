@@ -1,5 +1,6 @@
 package dev.montanarbriggs.jdabase.handlers;
 
+import dev.montanarbriggs.jdabase.commands.Ping;
 import dev.montanarbriggs.jdabase.interfaces.ISlashCommandInteraction;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
@@ -30,7 +31,7 @@ public class SlashCommandHandler extends ListenerAdapter {
     }
 
     private void initSlashCommandMap() {
-        // registerSlashCommand(new CommandClassName(Args...));
+        registerSlashCommand(new Ping());
     }
 
     @Override
