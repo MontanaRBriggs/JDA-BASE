@@ -21,6 +21,7 @@
 package dev.montanarbriggs.jdabase;
 
 import dev.montanarbriggs.jdabase.configuration.Configuration;
+import dev.montanarbriggs.jdabase.handlers.SlashCommandHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.exceptions.InvalidTokenException;
@@ -32,6 +33,18 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Scanner;
 
+/*
+ * TEMPORARY DOCUMENTATION.
+ *
+ * DEFINED EXIT CODES:
+ *
+ * - 0x0 - SUCCESS.
+ * - 0x1 - CONFIGURATION EXCEPTION.
+ * - 0x2 - TOKEN EXCEPTION.
+ * - 0x3 - JDA SHUTDOWN FAILURE.
+ * - 0x4 - THREAD INTERRUPTED EXCEPTION.
+ */
+
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
@@ -41,13 +54,17 @@ public class Main {
         } catch (IOException configurationLoadException) {
             LOGGER.error("IOException occurred whilst loading Configuration.json.");
 
-            System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
+            System.exit(0x1);
         }
 
         try {
             JDA jdaObject = JDABuilder.createDefault(
                     Configuration.getConfigurationInstance().optString("botToken")
             ).build();
+
+            jdaObject.addEventListener(new SlashCommandHandler(jdaObject));
+
+            // TODO: Abstract console command handling.
 
             Scanner terminalScanner = new Scanner(System.in);
 
@@ -67,7 +84,7 @@ public class Main {
         } catch (InvalidTokenException invalidTokenException) {
             LOGGER.error("InvalidTokenException occurred whilst initializing JDA, please ensure botToken is valid.");
 
-            System.exit(-1); // TODO: Create a list of documented exit codes specifying different exit conditions.
+            System.exit(0x2);
         }
     }
 
@@ -85,17 +102,17 @@ public class Main {
                 if (jdaObject.awaitShutdown(Duration.ofMinutes(5))) {
                     LOGGER.error("JDA took more than five (5) minutes to forcibly shut down. Terminating process.");
 
-                    System.exit(-1);
+                    System.exit(0x3);
                 }
             }
         } catch(InterruptedException threadInterruptedException) {
             LOGGER.error("InterruptedException thrown whilst awaiting JDA shutdown (thread interruption).");
 
-            System.exit(-1);
+            System.exit(0x4);
         }
 
         LOGGER.info("Graceful shutdown successful, exiting the JVM.");
 
-        System.exit(0);
+        System.exit(0x0);
     }
 }
