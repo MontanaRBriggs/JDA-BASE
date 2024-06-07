@@ -94,6 +94,8 @@ public class Main {
             System.exit(-1);
         }
 
+        LOGGER.info("Graceful shutdown successful, exiting the JVM.");
+
         System.exit(0);
     }
 }
