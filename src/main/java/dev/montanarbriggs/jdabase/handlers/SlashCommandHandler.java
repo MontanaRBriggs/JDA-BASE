@@ -21,6 +21,7 @@
 package dev.montanarbriggs.jdabase.handlers;
 
 import dev.montanarbriggs.jdabase.commands.ButtonExample;
+import dev.montanarbriggs.jdabase.commands.DropdownExample;
 import dev.montanarbriggs.jdabase.commands.ModalExample;
 import dev.montanarbriggs.jdabase.commands.Ping;
 import dev.montanarbriggs.jdabase.interfaces.ISlashCommandInteraction;
@@ -56,6 +57,7 @@ public class SlashCommandHandler extends ListenerAdapter {
         registerSlashCommand(new Ping());
         registerSlashCommand(new ModalExample());
         registerSlashCommand(new ButtonExample());
+        registerSlashCommand(new DropdownExample());
     }
 
     @Override

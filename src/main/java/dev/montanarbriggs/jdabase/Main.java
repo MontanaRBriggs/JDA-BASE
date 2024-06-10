@@ -22,6 +22,7 @@ package dev.montanarbriggs.jdabase;
 
 import dev.montanarbriggs.jdabase.configuration.Configuration;
 import dev.montanarbriggs.jdabase.handlers.ButtonHandler;
+import dev.montanarbriggs.jdabase.handlers.DropdownHandler;
 import dev.montanarbriggs.jdabase.handlers.ModalHandler;
 import dev.montanarbriggs.jdabase.handlers.SlashCommandHandler;
 import net.dv8tion.jda.api.JDA;
@@ -64,9 +65,11 @@ public class Main {
                     Configuration.getConfigurationInstance().optString("botToken")
             ).build();
 
+            // NOTE: these event handlers may be condensed into one class.
             jdaObject.addEventListener(new SlashCommandHandler(jdaObject));
             jdaObject.addEventListener(new ModalHandler());
             jdaObject.addEventListener(new ButtonHandler());
+            jdaObject.addEventListener(new DropdownHandler());
 
             // TODO: Abstract console command handling.
 
