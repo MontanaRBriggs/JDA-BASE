@@ -46,8 +46,6 @@ public class ModalExample implements ISlashCommandInteraction, IModalInteraction
             slashCommandInteractionEvent.replyEmbeds(Embeds.errorEmbed(
                     "Please select between Modal 01 (1) and 02 (2)."
             )).setEphemeral(true).queue();
-
-            return;
         } else {
             TextInput userName = TextInput.create("name", "What's your name?", TextInputStyle.SHORT)
                     .setPlaceholder("Enter your name here!")

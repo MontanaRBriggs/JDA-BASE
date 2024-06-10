@@ -32,11 +32,11 @@ public class Ping implements ISlashCommandInteraction {
     public void handleSlashCommandInteraction(SlashCommandInteractionEvent slashCommandInteractionEvent) {
         long gatewayPing = slashCommandInteractionEvent.getJDA().getGatewayPing();
 
-        slashCommandInteractionEvent.getJDA().getRestPing().queue(restResponsePing -> {
+        slashCommandInteractionEvent.getJDA().getRestPing().queue(restResponsePing ->
             slashCommandInteractionEvent.replyEmbeds(Embeds.informationEmbed(String.format(
                     "Gateway ping was **%d** milliseconds, and the REST response was **%d** milliseconds.", gatewayPing, restResponsePing
-            ))).setEphemeral(true).queue();
-        });
+            ))).setEphemeral(true).queue()
+        );
     }
 
     @Override
