@@ -20,10 +20,7 @@
 
 package dev.montanarbriggs.jdabase.handlers;
 
-import dev.montanarbriggs.jdabase.commands.ButtonExample;
-import dev.montanarbriggs.jdabase.commands.DropdownExample;
-import dev.montanarbriggs.jdabase.commands.ModalExample;
-import dev.montanarbriggs.jdabase.commands.Ping;
+import dev.montanarbriggs.jdabase.commands.*;
 import dev.montanarbriggs.jdabase.interfaces.ISlashCommandInteraction;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
@@ -58,6 +55,7 @@ public class SlashCommandHandler extends ListenerAdapter {
         registerSlashCommand(new ModalExample());
         registerSlashCommand(new ButtonExample());
         registerSlashCommand(new DropdownExample());
+        registerSlashCommand(new AutoCompleteExample());
     }
 
     @Override
@@ -71,8 +69,10 @@ public class SlashCommandHandler extends ListenerAdapter {
 
     @Override
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent commandAutoCompleteInteractionEvent) {
-        // TODO: Handle CommandAutoCompleteInteraction events.
+        ISlashCommandInteraction autoCompleteInteraction = slashCommandMap.get(commandAutoCompleteInteractionEvent.getName());
 
-        super.onCommandAutoCompleteInteraction(commandAutoCompleteInteractionEvent);
+        if (Objects.nonNull(autoCompleteInteraction)) { // Sanity check, as this should ALWAYS be true.
+            autoCompleteInteraction.handleCommandAutoCompleteInteraction(commandAutoCompleteInteractionEvent);
+        }
     }
 }
