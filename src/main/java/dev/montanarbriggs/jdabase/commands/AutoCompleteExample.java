@@ -37,7 +37,7 @@ public class AutoCompleteExample implements ISlashCommandInteraction {
     public void handleSlashCommandInteraction(SlashCommandInteractionEvent slashCommandInteractionEvent) {
         slashCommandInteractionEvent.replyEmbeds(Embeds.informationEmbed(
                 "This command is used to showcase command autocomplete."
-        )).queue();
+        )).setEphemeral(true).queue();
     }
 
     @Override
