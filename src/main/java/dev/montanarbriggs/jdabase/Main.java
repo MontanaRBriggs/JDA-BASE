@@ -21,6 +21,7 @@
 package dev.montanarbriggs.jdabase;
 
 import dev.montanarbriggs.jdabase.configuration.Configuration;
+import dev.montanarbriggs.jdabase.handlers.ModalHandler;
 import dev.montanarbriggs.jdabase.handlers.SlashCommandHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -63,6 +64,7 @@ public class Main {
             ).build();
 
             jdaObject.addEventListener(new SlashCommandHandler(jdaObject));
+            jdaObject.addEventListener(new ModalHandler());
 
             // TODO: Abstract console command handling.
 

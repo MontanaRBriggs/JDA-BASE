@@ -1,5 +1,6 @@
 package dev.montanarbriggs.jdabase.handlers;
 
+import dev.montanarbriggs.jdabase.commands.ModalExample;
 import dev.montanarbriggs.jdabase.commands.Ping;
 import dev.montanarbriggs.jdabase.interfaces.ISlashCommandInteraction;
 import net.dv8tion.jda.api.JDA;
@@ -32,6 +33,7 @@ public class SlashCommandHandler extends ListenerAdapter {
 
     private void initSlashCommandMap() {
         registerSlashCommand(new Ping());
+        registerSlashCommand(new ModalExample());
     }
 
     @Override
