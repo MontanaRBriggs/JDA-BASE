@@ -51,7 +51,11 @@ public class SlashCommandHandler extends ListenerAdapter {
     }
 
     private void initSlashCommandMap() {
+        // Utility commands.
         registerSlashCommand(new Ping());
+        registerSlashCommand(new Uptime());
+
+        // Interaction examples.
         registerSlashCommand(new ModalExample());
         registerSlashCommand(new ButtonExample());
         registerSlashCommand(new DropdownExample());
