@@ -80,7 +80,7 @@ public class ModalExample implements ISlashCommandInteraction, IModalInteraction
     @Override
     public SlashCommandData getSlashCommandData() {
         return Commands.slash("modalexample", "Choose between two different modal examples, handled by one command!")
-                .addOption(OptionType.INTEGER, "modal", "Choose between Example Modal 01 and 02.");
+                .addOption(OptionType.INTEGER, "modal", "Choose between Example Modal 01 and 02.", true);
     }
 
     @Override
