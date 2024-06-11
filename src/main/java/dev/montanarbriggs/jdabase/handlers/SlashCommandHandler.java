@@ -60,6 +60,9 @@ public class SlashCommandHandler extends ListenerAdapter {
         registerSlashCommand(new ButtonExample());
         registerSlashCommand(new DropdownExample());
         registerSlashCommand(new AutoCompleteExample());
+
+        // Web request examples.
+        registerSlashCommand(new WebRequestExample());
     }
 
     @Override
